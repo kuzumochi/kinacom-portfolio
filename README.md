@@ -4,7 +4,7 @@ Kinacomのポートフォリオサイトです。
 
 ## URL
 
-https://xxxxxxxx.pages.dev
+https://kinacom.cc/
 
 ## 技術スタック
 
