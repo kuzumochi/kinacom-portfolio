@@ -1,0 +1,62 @@
+---
+// currentIdページの前後の作品を取得するコンポーネント。順番はsortWorksでソートされた順番。
+import { getCollection } from 'astro:content';
+import Link from './Link.astro';
+import { sortWorks } from '../utilities/sortWorks';
+
+const { currentId } = Astro.props;
+
+const entries = await getCollection('works');
+const sortEntries = await sortWorks(entries);
+---
+<div class="pagenate">
+  {sortEntries.map((entry, index) => {
+    if (entry.id === currentId) {
+      const prev = index > 0 ? sortEntries[index - 1] : null;
+      const next = index < sortEntries.length - 1 ? sortEntries[index + 1] : null;
+
+      return (
+        <>
+          {prev && (
+            <div class="prev">
+              <Link href={`/works/${prev.id}`} icon="arrow-left" iconPos="before">Prev</Link>
+            </div>
+          )}
+          <div class="list">
+            <Link href={`/#works`} icon="grid" iconPos="before">List</Link>
+          </div>
+          {next && (
+            <div class="next">
+              <Link href={`/works/${next.id}`} className={["works-pagenate__next"]} icon="arrow-right" iconPos="after">
+                Next
+              </Link>
+            </div>
+          )}
+        </>
+      );
+    }
+  })}
+</div>
+
+<style lang="scss">
+.pagenate {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	justify-content: space-between;
+
+  .prev {
+    grid-column: 1 / 2;
+    justify-self: start;
+  }
+
+  .list {
+    grid-column: 2 / 3;
+    justify-self: center;
+  }
+
+  .next {
+    grid-column: 3 / 4;
+    justify-self: end;
+  }
+}
+</style>

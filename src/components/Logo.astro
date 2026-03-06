@@ -1,0 +1,20 @@
+---
+import VerticalLogo from "../assets/img/logo_vertical.svg";
+import HorizontalLogo from "../assets/img/logo_horizontal.svg";
+
+type LogoType = "vertical" | "horizontal";
+type Props = {
+  type?: LogoType;
+  color?: string;
+  width?: string | number;
+  height?: string | number;
+  class?: string | string[];
+};
+
+const { type = "vertical", color = "currentColor", width, height, class: classList }: Props = Astro.props;
+
+const classString = Array.isArray(classList) ? classList.join(" ") : classList || "";
+
+---
+
+{type === "vertical" ? <VerticalLogo fill={color} width={width} height={height} class={classString} role="img" aria-label="Kinacom" /> : <HorizontalLogo fill={color} width={width} height={height} class={classString} role="img" aria-label="Kinacom" />}

@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from 'astro:content';
+type WorkEntry = CollectionEntry<'works'>;
+
+import { Picture } from "astro:assets";
+const { images = [] }: { images?: WorkEntry['data']['additionalImages'] } = Astro.props;
+---
+{
+  images && images.map((image) => (
+    <div class="additional-image">
+      <Picture src={image.src} width={1200} alt={image.caption} formats={["avif", "webp"]}  />
+      <p class="caption">{image.caption}</p>
+    </div>
+  ))
+}
+
+<style lang="scss">
+img {
+  border: 1px solid #f5f5f5;
+  border-radius: var(--inner-radius);
+}
+
+.caption {
+  margin-top: 0.5em;
+  font-size: 0.9em;
+}
+  // .additional-image
+</style>

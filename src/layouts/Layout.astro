@@ -1,23 +1,46 @@
+---
+import "../styles/reset.css";
+import "../styles/global.scss";
+import Logo from "../components/Logo.astro";
+import Menu from "../components/Menu.astro";
+
+const { title, current } = Astro.props;
+
+const pageTitle = title ? `${title} | Kinacom` : "Kinacom";
+---
 <!doctype html>
-<html lang="en">
+<html lang="ja">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{pageTitle}</title>
 	</head>
 	<body>
-		<slot />
+		<div class="container">
+			<div class="contents">
+				<header class="header">
+					<h1 class="header-logo">
+						<a href="/">
+							<Logo type="vertical" color="#ffffff" width={130} height={162} class="vertical-logo" />
+							<Logo type="horizontal" color="#ffffff" width={200}  class="horizontal-logo" />
+						</a>
+					</h1>
+				</header>
+
+				<Menu current={current} />
+
+				<div class="main">
+					<slot />
+				<!-- /.main --></div>
+			<!-- /.contents --></div>
+			 <footer class="footer"><p class="footer-copyright">&copy; 2026 Kinacom</p></footer>
+		<!-- /.container --></div>
 	</body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+
 </style>

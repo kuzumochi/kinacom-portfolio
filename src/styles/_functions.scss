@@ -1,0 +1,16 @@
+@use "sass:math";
+
+// -----
+// Functions
+// -----
+@function fs-rem($size, $base: 16) {
+	@return math.div($size, $base) * 1rem;
+}
+
+@function cqw($size, $base: $base-width) {
+	@return math.div($size, $base) * 100cqw;
+}
+
+@function vw($size, $base: $base-width) {
+	@return math.div($size, $base) * 100vw;
+}

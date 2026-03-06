@@ -1,0 +1,30 @@
+---
+import type { LinkProps } from "../types";
+
+type Props = LinkProps;
+
+const { variant = "text" ,href, className, icon, iconPos = "after", target = "_self", fullWidth = false } = Astro.props;
+
+const defaultClass = variant === "text" ? "text-link" : "button-link";
+const classList = [defaultClass];
+
+if(typeof icon !== "undefined") {
+  classList.push("icon");
+  classList.push(`icon--${icon}`);
+  classList.push(`icon--${iconPos}`);
+}
+
+if(fullWidth) {
+  classList.push("full-width");
+}
+
+if(typeof className !== "undefined") {
+  if(Array.isArray(className)) {
+    classList.push(...className);
+  } else {
+    classList.push(className);
+  }
+}
+
+---
+<a href={href} class={classList.join(" ")} target={target}><span><slot /></span></a>

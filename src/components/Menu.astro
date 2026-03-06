@@ -1,0 +1,71 @@
+---
+import Link from "../components/Link.astro";
+const { current } = Astro.props;
+---
+<div class="menu">
+  <ul class="menu__list">
+    <li><Link href="/#works" className={current === "works" ? ["--current"] : []}>Works</Link></li>
+    <li><Link href="/#about" className={current === "about" ? ["--current"] : []}>About Me</Link></li>
+    <li><Link variant="button" href="https://github.com/kuzumochi" target="_blank" icon="window" iconPos="before">Source Code</Link></li>
+  </ul>
+
+  <div class="menu__open">
+    <button class="menu__button" aria-label="メニューを開く">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</div>
+
+<script>
+// メニューの開閉処理
+const menu = document.querySelector(".menu");
+const openClass = "--open";
+
+if (menu) {
+  const button = menu.querySelector(".menu__button") as HTMLElement;
+  const list = menu.querySelector(".menu__list") as HTMLElement;
+
+  button?.addEventListener("click", () => {
+    if (list) {
+      const isOpen = menu.classList.toggle(openClass);
+      if (isOpen) {
+        menu.classList.add(openClass);
+      } else {
+        menu.classList.remove(openClass);
+      }
+    }
+  });
+}
+
+// トップページ用。スクロールに応じたメニューのハイライト処理
+const isTopPage = location.pathname === "/" || location.pathname === "/index.html";
+
+if (menu && isTopPage) {
+  const links = [...menu.querySelectorAll(".menu__list a")];
+  const sections = [...document.querySelectorAll("section[id]")];
+
+  const setCurrent = (id: string) => {
+    links.forEach((a) => {
+      const href = a.getAttribute("href") ?? "";
+      const hit = href === `/#${id}` || href === `#${id}`;
+      a.classList.toggle("--current", hit);
+    });
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const active = entries.find((e) => e.isIntersecting);
+      if (active) setCurrent(active.target.id);
+    },
+    {
+      root: null,
+      threshold: 0,
+      rootMargin: "-40% 0px -40% 0px",
+    }
+  );
+
+  sections.forEach((section) => observer.observe(section));
+}
+</script>

@@ -1,0 +1,10 @@
+@use "sass:math";
+
+// -----
+// Mixins
+// -----
+@mixin mq($breakpoint) {
+	@media screen and (max-width: #{$breakpoint}px) {
+		@content;
+	}
+}

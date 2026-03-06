@@ -1,11 +1,143 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import { Picture } from "astro:assets";
+import { getCollection } from 'astro:content';
+import profile from '../assets/img/profile.png';
+import { sortWorks } from '../utilities/sortWorks';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const entries = await getCollection('works');
+const sortEntries = await sortWorks(entries);
 ---
 
-<Layout>
-	<Welcome />
+<Layout current="works">
+	<section id="works" class="works">
+		<ul>
+			{sortEntries.map((entry) => (
+				<li>
+					<a href={`/works/${entry.id}`}>
+						{entry.data.thumbnail && <Picture src={entry.data.thumbnail} alt={entry.data.title} formats={["avif", "webm"]} />}
+						{!entry.data.thumbnail && <Picture src={entry.data.image} width="400" height="400" fit="cover" alt={entry.data.title} formats={["avif", "webm"]} />}
+					</a>
+				</li>
+			))}
+		</ul>
+	</section>
+	<section id="about" class="about">
+		<div class="about__image">
+			<Picture src={profile} alt="" formats={['avif', 'webp']} />
+		</div>
+		<p class="about__name">Kinacom</p>
+		<p class="about__description">Web Developer / Markup Engineer</p>
+		<p class="about__introduction">1987年生まれ。<br>大学卒業後の2010年にWeb制作会社に入社。<br>少数精鋭の企業で、入社から現在に至るまで約15年にわたり多数のWeb制作業務に従事。多くの案件で要件整理から実装、公開までを一貫して担当。</p>
+
+			<div class="skills">
+				<p class="skills__title">Skills</p>
+				<ul class="skills__list">
+					<li>HTML / CSS (Sass) / JavaScript</li>
+					<li>Wordpress（テーマ開発）</li>
+					<li>jQuery</li>
+					<li>Vue.js ( v2 / v3 )</li>
+					<li>Astro</li>
+					<li>Remix(v2) / React</li>
+					<li>Three.js</li>
+					<li>Figma</li>
+					<li>Adobe Photoshop</li>
+					<li>Adobe Illustrator</li>
+					<li>Adobe XD</li>
+					<li>Git</li>
+				</ul>
+			</div>
+	</section>
 </Layout>
+
+<style lang="scss">
+@use "../styles/_mixins" as mx;
+@use "../styles/_functions" as fn;
+
+.works {
+	ul {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		gap: 1em;
+		padding: 0;
+		list-style: none;
+		max-width: none;
+
+		@include mx.mq(520) {
+			grid-template-columns: 1fr 1fr;
+			gap: fn.vw(16, 520);
+		}
+
+		a {
+			display: block;
+			border-radius: var(--inner-radius);
+			overflow: hidden;
+
+			img {
+				width: 100%;
+				height: auto;
+				display: block;
+				object-fit: cover;
+				transition: transform 0.2s;
+
+				&:hover {
+					transform: scale(1.05);
+				}
+			}
+		}
+	}
+}
+
+.about {
+	padding: 5em 0 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	// gap: 1em;
+
+	&__image {
+		width: 180px;
+		height: 180px;
+		border-radius: 50%;
+		overflow: hidden;
+	}
+
+	&__name {
+		font-size: var(--fs24);
+		font-weight: bold;
+		color: var(--color-primary);
+	}
+
+	&__description {
+		color: #4b5563;
+	}
+
+	&__introduction {
+		max-width: 600px;
+		color: #4b5563;
+		line-height: 1.75;
+		padding: 1em 0 2em;
+	}
+}
+
+.skills {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	place-content: start center;
+	column-gap: 1.5em;
+
+	&__title {
+		color: var(--color-primary);
+		font-weight: bold;
+		font-size: 1.25em;
+		margin-bottom: 0.5em;
+	}
+
+	&__list {
+		list-style: none;
+		padding: 0;
+		text-align: left;
+	}
+}
+</style>

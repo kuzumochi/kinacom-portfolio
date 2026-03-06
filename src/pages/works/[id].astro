@@ -1,0 +1,106 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Picture } from "astro:assets";
+import Layout from '../../layouts/Layout.astro';
+import Link from '../../components/Link.astro';
+import WorksPagenate from '../../components/WorksPagenate.astro';
+import WorksAdditionalImages from '../../components/WorksAdditionalImages.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('works');
+
+  return entries.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+<Layout current="works" title={entry.data.title}>
+  <div class="site-image">
+    <Picture src={entry.data.image} width={1500} alt={entry.data.title} formats={["avif", "webp"]} />
+    { entry.data.url && <div class="button-website"><Link variant="button" href={entry.data.url} target="_blank" icon="window" iconPos="before" fullWidth={true}>このWebサイトを開く</Link></div>}
+  </div>
+  <h2>{entry.data.title}</h2>
+  <p class="date">{entry.data.year}年{entry.data.month}月頃</p>
+  <ul class="tags">
+    {entry.data.tags.map((tag) => (
+      <li>{tag}</li>
+    ))}
+  </ul>
+  <div class="article">
+    <Content />
+  </div>
+  {
+    // additionalImagesがあればここで表示
+    entry.data.additionalImages && (
+      <div class="additional-images">
+        <WorksAdditionalImages images={entry.data.additionalImages} />
+      </div>
+    )
+  }
+  <WorksPagenate currentId={entry.id} />
+</Layout>
+
+<style lang="scss">
+@use "../../styles/_mixins" as mx;
+@use "../../styles/_variables" as var;
+
+.site-image {
+  position: relative;
+
+  img {
+    border-radius: var(--inner-radius);
+  }
+}
+
+.button-website {
+  position: absolute;
+  bottom: 1.5em;
+  right: 1.5em;
+
+  @include mx.mq(var.$bp-small) {
+    position: static;
+    width: 100%;
+    margin-block: 1em;
+  }
+}
+
+h2 {
+  margin-block: 2em 1em;
+  padding-left: 20px;
+  border-left: 3px solid var(--color-primary);
+  font-size: var(--fs24);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  color: var(--color-primary);
+  list-style: none;
+  padding: 0;
+
+  li:not(:first-child)::before {
+    content: "/";
+    margin-inline: 0.25em;
+  }
+}
+
+.article {
+  margin-block: 3em;
+
+  :global(p:not(:first-child)) {
+    margin-top: 1em;
+  }
+}
+
+.additional-images {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2em;
+  margin-block: 3em;
+}
+
+</style>
