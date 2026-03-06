@@ -26,6 +26,11 @@ const openClass = "--open";
 if (menu) {
   const button = menu.querySelector(".menu__button") as HTMLElement;
   const list = menu.querySelector(".menu__list") as HTMLElement;
+  const links = menu.querySelectorAll(".menu__list a") as NodeListOf<HTMLAnchorElement>;
+
+  const closeOnClick = (e: Event) => {
+    menu.classList.remove(openClass);
+  };
 
   button?.addEventListener("click", () => {
     if (list) {
@@ -37,6 +42,9 @@ if (menu) {
       }
     }
   });
+
+  // メニュー内のリンクをクリックしたらメニューを閉じる
+  links?.forEach((link) => link.addEventListener("click", closeOnClick));
 }
 
 // トップページ用。スクロールに応じたメニューのハイライト処理
