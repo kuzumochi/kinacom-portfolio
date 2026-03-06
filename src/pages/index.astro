@@ -15,8 +15,8 @@ const sortEntries = await sortWorks(entries);
 			{sortEntries.map((entry) => (
 				<li>
 					<a href={`/works/${entry.id}`}>
-						{entry.data.thumbnail && <Picture src={entry.data.thumbnail} alt={entry.data.title} formats={["avif", "webm"]} />}
-						{!entry.data.thumbnail && <Picture src={entry.data.image} width="400" height="400" fit="cover" alt={entry.data.title} formats={["avif", "webm"]} />}
+						{entry.data.thumbnail && <Picture src={entry.data.thumbnail} alt={entry.data.title} formats={["avif", "webp"]} />}
+						{!entry.data.thumbnail && <Picture src={entry.data.image} width="400" height="400" fit="cover" alt={entry.data.title} formats={["avif", "webp"]} />}
 					</a>
 				</li>
 			))}
