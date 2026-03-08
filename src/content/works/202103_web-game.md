@@ -8,11 +8,11 @@ priority: 10
 additionalImages: [
   {
     src: "./captures/202103_web-game_ui1.png",
-    caption: "初期状態"
+    caption: "初期状態。最初のステージ以外は選べないようになっている。"
   },
   {
     src: "./captures/202103_web-game_ui2.png",
-    caption: "ステージ5クリア後"
+    caption: "ステージ5クリア後。これまでのステージと次のステージ、各ステージのクリア特典が閲覧できるようになっている。"
   },
 ]
 ---
