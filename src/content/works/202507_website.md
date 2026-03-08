@@ -1,5 +1,5 @@
 ---
-title: "企業紹介サイト（シングルページ）"
+title: "企業Webサイト（シングルページ）"
 year: "2025"
 month: "7"
 tags: ["HTML", "CSS", "JavaScript", "GSAP"]

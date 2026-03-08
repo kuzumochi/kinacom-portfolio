@@ -73,6 +73,7 @@ h2 {
   padding-left: 20px;
   border-left: 3px solid var(--color-primary);
   font-size: var(--fs24);
+  text-wrap: pretty;
 }
 
 .tags {
@@ -90,6 +91,7 @@ h2 {
 
 .article {
   margin-block: 3em;
+  text-wrap: pretty;
 
   :global(p:not(:first-child)) {
     margin-top: 1em;
@@ -98,9 +100,13 @@ h2 {
 
 .additional-images {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 2em;
   margin-block: 3em;
+
+  @include mx.mq(var.$bp-small) {
+    grid-template-columns: 1fr;
+  }
 }
 
 </style>
