@@ -1,7 +1,7 @@
 ---
 title: "生成AI風スペシャルサイト"
 year: "2024"
-month: "9"
+month: "8"
 tags: ["Astro", "Preact", "GSAP", "HTML", "CSS", "JavaScript"]
 image: "./captures/202409_generative-ai.png"
 priority: 10

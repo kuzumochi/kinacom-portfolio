@@ -1,6 +1,6 @@
 ---
 title: "キャンペーンランディングページ"
-year: "2021"
+year: "2023"
 month: "5"
 tags: ["HTML", "CSS", "JavaScript", "GSAP"]
 image: "./captures/202305_campaign-lp.png"
